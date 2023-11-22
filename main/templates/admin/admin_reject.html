@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %} Reject user {% endblock %}
+
+{% block content %}
+
+    <h3>Are you sure you want to reject <a href="{{viewed_user.get_absolute_url}}">'{{ viewed_user.first_name }} {{ viewed_user.last_name }}'</a> user's registration?</h3>
+    <form method="post">
+        {% csrf_token %}
+        <button class="btn btn-danger" type="submit">Reject</button>
+    </form>
+{% endblock %}

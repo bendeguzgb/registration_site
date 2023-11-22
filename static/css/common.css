@@ -1,0 +1,119 @@
+:root {
+    --grid-max-width: 400px
+}
+
+body, p {
+    margin: 0px;
+}
+
+
+#title-container {
+    display: flex;
+    justify-content: space-between;
+    color: #fff;
+    font-weight: bold;
+    background: #ef5628;
+    margin-bottom: 30px;
+}
+
+#title {
+    flex: 1;
+    text-align: center
+}
+
+#title a {
+    font-size: 25px;
+}
+
+#username {
+    position: absolute;
+    font-size: 20px;
+    top: 2px;
+    right: 0;
+    margin-right: 20px
+}
+
+.no-decor, .no-decor:hover {
+    text-decoration: none;
+    color: inherit;
+}
+
+.divider {
+    max-width: 400px;
+    height: 2px;
+    background: grey;
+}
+
+.divider-or {
+    display: flex;
+    align-items: center;
+}
+
+.divider-or::before {
+    flex: 1 0 auto;
+    content: "";
+    height: 2px;
+    background: grey;
+    margin-right: 5px;
+}
+
+.divider-or::after {
+    flex: 1 0 auto;
+    content: "";
+    height: 2px;
+    background: grey;
+    margin-left: 5px;
+}
+
+.wrapper {
+    display: grid;
+    grid-template-columns:
+        1fr
+        [content-start] min(90%, var(--grid-max-width)) [content-end]
+        1fr;
+    gap: 20px;
+}
+
+.wrapper > * {
+    width: min(100%, var(--grid-max-width));
+    grid-column: content
+}
+
+.orange-white:hover {
+    background:  #ef5628;
+    color: #FFF;
+}
+
+
+.clickable {
+    border: none;
+    border-radius: 10px;
+    padding: 10px 0px;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+.error-text {
+    text-align: center;
+    color: red;
+}
+
+.orcid-green {
+    color: #98ce00;
+    font-weight: bold;
+}
+
+.APPROVED {
+    background: var(--success);
+    color: var(--white);
+}
+
+.PENDING {
+    background: var(--warning);
+    color: var(--white);
+}
+
+.REJECTED {
+    background: var(--danger);
+    color: var(--white);
+}

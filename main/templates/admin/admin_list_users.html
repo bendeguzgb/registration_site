@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% block title %}Users{% endblock %}
+
+{% block content %}
+
+    <form method="get" action="{% url 'main:admin_list_users' %}">
+        <label for="page_size">Show:</label>
+        <select name="page_size" id="page_size" onchange="this.form.submit()">
+            <option value="10" {% if page_obj.paginator.per_page == 10 %}selected{% endif %}>10</option>
+            <option value="25" {% if page_obj.paginator.per_page == 25 %}selected{% endif %}>25</option>
+            <option value="50" {% if page_obj.paginator.per_page == 50 %}selected{% endif %}>50</option>
+            <option value="100" {% if page_obj.paginator.per_page == 100 %}selected{% endif %}>100</option>
+        </select>
+    </form>
+
+<!--    <form method="get" action="{% url 'main:admin_list_users' %}">-->
+<!--        <input type="text" name="search" placeholder="First name" value="{{ request.GET.search }}">-->
+<!--    </form>-->
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Registration status
+                    <form method="get" action="{% url 'main:admin_list_users' %}">
+                        <select name="status_filter" id="status_filter" onchange="this.form.submit()">
+                            <option value="ALL" {% if not request.GET.status_filter %}selected{% endif %}>ALL</option>
+                            <option value="APPROVED" {% if request.GET.status_filter == "APPROVED" %}selected{% endif %}>APPROVED</option>
+                            <option value="REJECTED" {% if request.GET.status_filter == "REJECTED" %}selected{% endif %}>REJECTED</option>
+                            <option value="PENDING" {% if request.GET.status_filter == "PENDING" %}selected{% endif %}>PENDING</option>
+                        </select>
+                    </form>
+                </th>
+                <th>First name
+                    <form method="get" action="{% url 'main:admin_list_users' %}">
+                        <input type="text" name="first_name" placeholder="First name" value="{{ request.GET.first_name }}">
+                    </form>
+                </th>
+                <th>Last name
+                    <form method="get" action="{% url 'main:admin_list_users' %}">
+                        <input type="text" name="last_name" placeholder="Last name" value="{{ request.GET.last_name }}">
+                    </form>
+                </th>
+                <th>Email
+                </th>
+                <th>Phone number</th>
+                <th>Company name</th>
+                <th>Country of origin</th>
+                <th>Active</th>
+                <th>Superuser</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user_iter in users %}
+                <tr>
+                    <td><a href="{{ user_iter.get_absolute_url }}">{{ user_iter.id }}</a></td>
+                    <td>{{ user_iter.registration_status }}</td>
+                    <td>{{ user_iter.first_name }}</td>
+                    <td>{{ user_iter.last_name }}</td>
+                    <td>{{ user_iter.email }}</td>
+                    <td>{{ user_iter.phone_number }}</td>
+                    <td>{{ user_iter.company_name }}</td>
+                    <td>{{ user_iter.country_of_origin }}</td>
+                    <td>{{ user_iter.is_active }}</td>
+                    <td>{{ user_iter.is_superuser }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            {% if page_obj.has_previous %}
+                <li class="page-item"><a class="page-link" href="?page=1">First</a></li>
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
+            {% else %}
+                <li class="page-item"><a class="page-link">First</a></li>
+                <li class="page-item"><a class="page-link">Previous</a></li>
+            {% endif %}
+
+            <li class="current">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.</li>
+
+            {% if page_obj.has_next %}
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Last</a></li>
+            {% else %}
+                <li class="page-item"><a class="page-link">Next</a></li>
+                <li class="page-item"><a class="page-link">Last</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+{% endblock %}

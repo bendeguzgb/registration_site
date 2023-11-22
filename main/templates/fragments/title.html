@@ -1,0 +1,11 @@
+<div id="title-container">
+    <div id="title">
+        <a class="no-decor" href="{% url 'main:home' %}">Registration Site</a>
+    </div>
+
+    {% if user is not None  and user.is_authenticated %}
+        <div id="username">
+            <a class="no-decor" href="{{ user.get_absolute_url }}">{{ user.get_full_name }}</a>
+        </div>
+    {% endif %}
+</div>

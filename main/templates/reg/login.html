@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %} Login {% endblock %}
+
+{% load static %}
+
+{% block additionalStyles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
+{% endblock %}
+
+{% block content %}
+    <form class="wrapper" method="post" action="{% url 'main:login' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+<!--        {{ register_form }}-->
+<!--        <input name="email" type="email" placeholder="Email" required autofocus>-->
+<!--        <input name="password" type="password" placeholder="Password" required>-->
+        <input class="orange-white clickable" type="submit" value="Sign in">
+        {% if error is not None %}
+            <p class="error-text">{{ error }}</p>
+        {% endif %}
+
+
+        <span class="divider-or"> OR </span>
+        <button class="orange-white clickable">
+            <img src="{% static 'images/orcid-icon.ico' %}" alt="orcid-image"> Sign in with ORC<span class="orcid-green">ID</span>
+        </button>
+    </form>
+
+{% endblock %}

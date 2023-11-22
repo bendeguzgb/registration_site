@@ -1,0 +1,6 @@
+crispy-bootstrap4==2023.1
+Django==4.2.7
+django-crispy-forms==2.1
+django-enumfields==2.1.1
+psycopg==3.1.12
+psycopg-binary==3.1.12

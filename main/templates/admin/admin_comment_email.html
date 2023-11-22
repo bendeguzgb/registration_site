@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>New Admin comment</title>
+</head>
+<body>
+
+<p>An Admin commented your registration form.</p>
+<p>Comment about first name: {{ admin_comment.first_name }}</p>
+<p>Comment about last name: {{ admin_comment.last_name }}</p>
+<p>Comment about email: {{ admin_comment.email }}</p>
+<p>Comment about phone number: {{ admin_comment.phone_number }}</p>
+
+{% if is_client %}
+    <p>Comment about company name: {{ admin_comment.company_name }}</p>
+    <p>Comment about country of origin: {{ admin_comment.country_of_origin }}</p>
+{% endif %}
+</body>
+</html>

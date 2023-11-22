@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+
+{% block title %}{{viewed_user.first_name}} {{viewed_user.last_name}}{% endblock %}
+
+{% block content %}
+    {% if viewed_user == user %}
+        {% if has_pending_reg_status %}
+            <button type="button" class="btn btn-warning">
+                <a class="no-decor" href="{{ request.path }}/update">Update my info</a>
+            </button>
+        {% endif %}
+
+        <button type="button" class="btn btn-secondary">
+            <a class="no-decor" href="{% url 'main:password_change' %}">Change password</a>
+        </button>
+        <button type="button" class="btn btn-danger">
+            <a class="no-decor" href="{% url 'main:logout' %}">Logout</a>
+        </button>
+    {% endif %}
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col"></th>
+                <th scope="col">Your information</th>
+                {% if has_pending_reg_status %}
+                    <th scope="col">Admin comment</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">Registration status</th>
+                <td class="{{ viewed_user.registration_status }}">{{ viewed_user.registration_status }}</td>
+                {% if has_pending_reg_status %}
+                    <td class="admin_comment"></td>
+                {% endif %}
+            </tr>
+            <tr>
+                <th scope="row">First name</th>
+                <td>{{ viewed_user.first_name }}</td>
+                {% if has_pending_reg_status %}
+                    <td class="admin_comment">{{ admin_comment.first_name }}</td>
+                {% endif %}
+            </tr>
+            <tr>
+                <th scope="row">Last name</th>
+                <td>{{ viewed_user.last_name }}</td>
+                {% if has_pending_reg_status %}
+                    <td class="admin_comment">{{ admin_comment.last_name }}</td>
+                {% endif %}
+            </tr>
+            <tr>
+                <th scope="row">Email</th>
+                <td>{{ viewed_user.email }}</td>
+                {% if has_pending_reg_status %}
+                    <td class="admin_comment">{{ admin_comment.email }}</td>
+                {% endif %}
+            </tr>
+            <tr>
+                <th scope="row">Phone number</th>
+                <td>{{ viewed_user.phone_number }}</td>
+                {% if has_pending_reg_status %}
+                    <td class="admin_comment">{{ admin_comment.phone_number }}</td>
+                {% endif %}
+            </tr>
+
+            {% if viewed_user.user_type == UserType.CLIENT %}
+                <tr>
+                    <th scope="row">Company name</th>
+                    <td>{{ viewed_user.company_name }}</td>
+                    {% if has_pending_reg_status %}
+                        <td class="admin_comment">{{ admin_comment.company_name }}</td>
+                    {% endif %}
+                </tr>
+                <tr>
+                    <th scope="row">Country of origin</th>
+                    <td>{{ viewed_user.country_of_origin }}</td>
+                    {% if has_pending_reg_status %}
+                        <td class="admin_comment">{{ admin_comment.country_of_origin }}</td>
+                    {% endif %}
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+
+    {% if user.is_superuser %}
+        <button type="button" class="btn btn-success">
+            {% with user_id=viewed_user.id %}
+                <a class="no-decor" href="{% url 'main:admin_approve' user_id %}">Approve User</a>
+            {% endwith %}
+        </button>
+
+        {% if has_pending_reg_status %}
+            <button type="button" class="btn btn-warning">
+                {% with user_id=viewed_user.id %}
+                    <a class="no-decor" href="{% url 'main:admin_comment' user_id %}">Add comment</a>
+                {% endwith %}
+            </button>
+        {% endif %}
+
+        <button type="button" class="btn btn-danger">
+            {% with user_id=viewed_user.id %}
+                <a class="no-decor" href="{% url 'main:admin_reject' user_id %}">Reject User</a>
+            {% endwith %}
+        </button>
+    {% endif %}
+{% endblock %}
