@@ -64,7 +64,7 @@ class User(AbstractUser):
     company_name = models.TextField(max_length=200, blank=True)
     country_of_origin = models.TextField(max_length=100, blank=True)
     registration_status = EnumField(RegistrationStatus, default=RegistrationStatus.PENDING)
-    # orcid_id = models.TextField(max_length=100)
+    orcid_id = models.TextField(max_length=20, blank=True)
 
     def get_absolute_url(self):
         return reverse("main:profile", kwargs={"pk": self.id})
