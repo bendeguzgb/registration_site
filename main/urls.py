@@ -7,6 +7,7 @@ app_name = "main"
 urlpatterns = [
     path('', views.home, name='home'),
     path('login', views.CustomLoginView.as_view(), name='login'),
+    path('login/orcid', views.orcid_auth, name='orcid_login'),
     path('logout', views.logout_view, name='logout'),
     path('visitor_register', views.visitor_register, name='visitor_register'),
     path('client_register', views.client_register, name='client_register'),

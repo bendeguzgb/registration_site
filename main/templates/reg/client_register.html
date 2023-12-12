@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block title %} Client register {% endblock %}
 
 {% block content %}
@@ -9,6 +11,9 @@
         <div class="wrapper">
             <div class="container">
                 <h1>Register</h1>
+                <button class="orange-white clickable" onclick="location.href='https://sandbox.orcid.org/oauth/authorize?client_id=APP-D9V6ZGFWJWVBML7C&response_type=code&scope=/read-limited&redirect_uri=http://localhost:8000/registration_site/login/orcid'">
+                    <img src="{% static 'images/orcid-icon.ico' %}" alt="orcid-image"> Register with ORC<span class="orcid-green">ID</span>
+                </button>
                 <form method="POST">
                     {% csrf_token %}
                     {{ register_form|crispy }}

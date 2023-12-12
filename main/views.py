@@ -1,4 +1,4 @@
-from django.contrib.auth import login, logout
+from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib.auth.views import LoginView
 from django.shortcuts import render, redirect, get_object_or_404
@@ -30,6 +30,18 @@ class CustomLoginView(LoginView):
     def get_success_url(self):
         user = self.request.user
         return user.get_absolute_url()
+
+
+def orcid_auth(request):
+    token = request.GET.get("code")
+    user = authenticate(request, token=token)
+
+    if user is None or not user.is_authenticated:
+        return redirect(reverse("main:client_register"))
+
+    login(request, user)
+
+    return redirect(user.get_absolute_url())
 
 
 def logout_view(request):
